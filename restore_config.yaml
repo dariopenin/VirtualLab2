@@ -1,6 +1,8 @@
 name: Restore Dell SONiC switch to factory defaults
-  hosts: dell_sonic_switches
+  hosts: NewFabric
   gather_facts: no
+  collections:
+    - dellemc.enterprise_sonic
   tasks:
 
     - name: Perform factory reset on Dell SONiC switch
