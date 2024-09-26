@@ -1,0 +1,234 @@
+is_border_leaf: false
+lacp_pcs: []
+mclag_member_pcs: []
+sonic_bgp:
+  - bestpath:
+      as_path:
+        multipath_relax: true
+    bgp_as: '{{ bgp_asn }}'
+    router_id: '{{ bgp_router_id }}'
+  - bgp_as: '{{bgp_asn}}'
+    vrf_name: VrfTenant1
+  - bgp_as: '{{bgp_asn}}'
+    vrf_name: VrfTenant2
+  - bgp_as: '{{ bgp_asn }}'
+sonic_bgp_af:
+  - address_family:
+      afis:
+        - afi: ipv4
+          max_path:
+            ebgp: 16
+          redistribute:
+            - protocol: connected
+          safi: unicast
+        - advertise_all_vni: true
+          afi: l2vpn
+          safi: evpn
+    bgp_as: '{{bgp_asn}}'
+  - address_family:
+      afis:
+        - afi: l2vpn
+          route_advertise_list:
+            - advertise_afi: ipv4
+          safi: evpn
+        - afi: ipv4
+          redistribute:
+            - protocol: connected
+          safi: unicast
+    bgp_as: '{{ bgp_asn }}'
+    vrf_name: VrfTenant1
+  - address_family:
+      afis:
+        - afi: l2vpn
+          route_advertise_list:
+            - advertise_afi: ipv4
+          safi: evpn
+        - afi: ipv4
+          redistribute:
+            - protocol: connected
+          safi: unicast
+    bgp_as: '{{ bgp_asn }}'
+    vrf_name: VrfTenant2
+sonic_bgp_neighbors:
+  - bgp_as: '{{bgp_asn}}'
+    neighbors:
+      - neighbor: Eth1/54
+        peer_group: spine-leaf
+      - neighbor: Eth1/53
+        peer_group: spine-leaf
+    peer_group:
+      - '{{sonic_bgp_spineleaf_peergroup}}'
+      - '{{sonic_bgp_external_pg_entry}}'
+sonic_bgp_neighbors_af:
+  - bgp_as: '{{bgp_asn}}'
+    neighbors:
+      - address_family: '{{sonic_bgp_fabriclink_neighbors_aflist}}'
+        neighbor: Eth1/54
+      - address_family: '{{sonic_bgp_fabriclink_neighbors_aflist}}'
+        neighbor: Eth1/53
+sonic_config:
+  lines: []
+sonic_interfaces:
+  - description: '"Uplink to DC1-S2 Eth1/4"'
+    enabled: true
+    name: Eth1/53
+  - description: '"Uplink to DC1-S1 Eth1/4"'
+    enabled: true
+    name: Eth1/54
+  - description: '"MCLAG to DC1-R2L1 Eth1/55"'
+    enabled: true
+    name: Eth1/55
+  - description: '"MCLAG to DC1-R2L1 Eth1/56"'
+    enabled: true
+    name: Eth1/56
+  - description: router-id
+    name: '{{ loopback_inf0 }}'
+  - description: vtep
+    name: '{{ loopback_inf1 }}'
+sonic_l2_interfaces:
+  - name: PortChannel100
+    trunk:
+      allowed_vlans:
+        - vlan: 100
+        - vlan: 200
+        - vlan: 201
+        - vlan: 202
+        - vlan: 301
+        - vlan: 302
+        - vlan: 303
+        - vlan: 304
+        - vlan: 305
+        - vlan: 306
+        - vlan: 307
+        - vlan: 308
+        - vlan: 309
+        - vlan: 310
+        - vlan: 61
+        - vlan: 62
+sonic_l3_interfaces:
+  - ipv6:
+      enabled: true
+    name: Eth1/53
+  - ipv6:
+      enabled: true
+    name: Eth1/54
+  - ipv4:
+      addresses:
+        - address: '{{ loopback0_ip }}'
+    name: '{{ loopback_inf0 }}'
+  - ipv4:
+      addresses:
+        - address: '{{ loopback1_ip }}'
+    name: '{{ loopback_inf1 }}'
+sonic_lag_interfaces:
+  - members:
+      interfaces:
+        - member: Eth1/55
+        - member: Eth1/56
+    name: PortChannel100
+sonic_system:
+  anycast_address:
+    ipv4: true
+    mac_address: '{{ anycast_mac_address }}'
+  hostname: DC1-R2L2
+  interface_naming: standard
+sonic_vlans:
+  - vlan_id: 100
+  - vlan_id: 200
+  - vlan_id: 201
+  - vlan_id: 202
+  - vlan_id: 301
+  - vlan_id: 302
+  - vlan_id: 303
+  - vlan_id: 304
+  - vlan_id: 305
+  - vlan_id: 306
+  - vlan_id: 307
+  - vlan_id: 308
+  - vlan_id: 309
+  - vlan_id: 310
+  - vlan_id: 61
+  - vlan_id: 62
+sonic_vrf_interfaces:
+  - members:
+      interfaces:
+        - name: Vlan100
+        - name: Vlan61
+        - name: Vlan200
+        - name: Vlan201
+        - name: Vlan202
+        - name: Vlan301
+        - name: Vlan302
+        - name: Vlan303
+        - name: Vlan304
+        - name: Vlan305
+    name: VrfTenant1
+  - members:
+      interfaces:
+        - name: Vlan62
+        - name: Vlan306
+        - name: Vlan307
+        - name: Vlan308
+        - name: Vlan309
+        - name: Vlan310
+    name: VrfTenant2
+sonic_vxlans:
+  - evpn_nvo: nvo1
+    name: vtep3
+    source_ip: '{{ loopback1_ip.split(''/'')[0] }}'
+    vlan_map:
+      - vlan: 100
+        vni: 10100
+      - vlan: 200
+        vni: 10200
+      - vlan: 201
+        vni: 10201
+      - vlan: 202
+        vni: 10202
+      - vlan: 301
+        vni: 10301
+      - vlan: 302
+        vni: 10302
+      - vlan: 303
+        vni: 10303
+      - vlan: 304
+        vni: 10304
+      - vlan: 305
+        vni: 10305
+      - vlan: 306
+        vni: 10306
+      - vlan: 307
+        vni: 10307
+      - vlan: 308
+        vni: 10308
+      - vlan: 309
+        vni: 10309
+      - vlan: 310
+        vni: 10310
+      - vlan: 61
+        vni: 1061
+      - vlan: 62
+        vni: 1062
+    vrf_map:
+      - vni: 1061
+        vrf: VrfTenant1
+      - vni: 1062
+        vrf: VrfTenant2
+vlans:
+  - 100
+  - 200
+  - 201
+  - 202
+  - 301
+  - 302
+  - 303
+  - 304
+  - 305
+  - 306
+  - 307
+  - 308
+  - 309
+  - 310
+vrfs:
+  - VrfTenant1
+  - VrfTenant2

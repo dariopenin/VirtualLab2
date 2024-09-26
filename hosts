@@ -1,0 +1,24 @@
+DC1-S1 ansible_host=192.168.1.216
+DC1-R1L1 ansible_host=192.168.1.210
+DC1-S2 ansible_host=192.168.1.217
+DC1-R1L2 ansible_host=192.168.1.211
+DC1-R2L1 ansible_host=192.168.1.212
+DC1-R2L2 ansible_host=192.168.1.213
+DC1-R3L1 ansible_host=192.168.1.214
+DC1-R3L2 ansible_host=192.168.1.215
+
+[spine]
+DC1-S1
+DC1-S2
+
+[leaf]
+DC1-R1L1
+DC1-R1L2
+DC1-R2L1
+DC1-R2L2
+DC1-R3L1
+DC1-R3L2
+
+[NewFabric:children]
+spine
+leaf
