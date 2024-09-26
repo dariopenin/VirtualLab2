@@ -1,6 +1,6 @@
-name: Restore Dell SONiC switch to factory defaults
-  hosts: NewFabric
-  gather_facts: no
+- hosts: NewFabric
+  connection: httpapi
+  gather_facts: false
   collections:
     - dellemc.enterprise_sonic
   tasks:
