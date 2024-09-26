@@ -1,4 +1,6 @@
 is_border_leaf: false
+lacp_pcs: []
+mclag_member_pcs: []
 sonic_bgp:
   - bestpath:
       as_path:
