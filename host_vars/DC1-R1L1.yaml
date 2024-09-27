@@ -1,12 +1,6 @@
 is_border_leaf: false
-lacp_pcs:
-  - 10
-  - 11
-  - 12
-mclag_member_pcs:
-  - lag: PortChannel10
-  - lag: PortChannel11
-  - lag: PortChannel12
+lacp_pcs: []
+mclag_member_pcs: []
 sonic_bgp:
   - bestpath:
       as_path:
@@ -58,9 +52,9 @@ sonic_bgp_af:
 sonic_bgp_neighbors:
   - bgp_as: '{{bgp_asn}}'
     neighbors:
-      - neighbor: Eth1/54
+      - neighbor: Eth1/7
         peer_group: spine-leaf
-      - neighbor: Eth1/53
+      - neighbor: Eth1/6
         peer_group: spine-leaf
     peer_group:
       - '{{sonic_bgp_spineleaf_peergroup}}'
@@ -69,98 +63,29 @@ sonic_bgp_neighbors_af:
   - bgp_as: '{{bgp_asn}}'
     neighbors:
       - address_family: '{{sonic_bgp_fabriclink_neighbors_aflist}}'
-        neighbor: Eth1/54
+        neighbor: Eth1/7
       - address_family: '{{sonic_bgp_fabriclink_neighbors_aflist}}'
-        neighbor: Eth1/53
+        neighbor: Eth1/6
 sonic_config:
   lines: []
 sonic_interfaces:
-  - description: '"Node-01_eth0-PCIe-NIC1-1G-1"'
+  - description: '"Uplink to DC1-S2"'
     enabled: true
-    name: Eth1/1
-  - description: '"Node-02_eth0-PCIe-NIC1-1G-1"'
+    name: Eth1/7
+  - description: '"Uplink to DC1-S1"'
     enabled: true
-    name: Eth1/2
-  - description: '"Node-03_eth0-PCIe-NIC1-1G-1"'
+    name: Eth1/6
+  - description: '"MCLAG"'
     enabled: true
-    name: Eth1/3
-  - description: '"Uplink to DC1-S2 Eth1/1"'
+    name: Eth1/8
+  - description: '"MCLAG"'
     enabled: true
-    name: Eth1/53
-  - description: '"Uplink to DC1-S1 Eth1/1"'
-    enabled: true
-    name: Eth1/54
-  - description: '"MCLAG to DC1-R1L2 Eth1/55"'
-    enabled: true
-    name: Eth1/55
-  - description: '"MCLAG to DC1-R1L2 Eth1/56"'
-    enabled: true
-    name: Eth1/56
+    name: Eth1/9
   - description: router-id
     name: '{{ loopback_inf0 }}'
   - description: vtep
     name: '{{ loopback_inf1 }}'
-  - description: '"LAG to Compute_1_Node-01_bond0"'
-    mtu: 9216
-    name: PortChannel10
-  - description: '"LAG to Compute_1_Node-02_bond0"'
-    mtu: 9216
-    name: PortChannel11
-  - description: '"LAG to Compute_1_Node-03_bond0"'
-    mtu: 9216
-    name: PortChannel12
 sonic_l2_interfaces:
-  - name: PortChannel 10
-    trunk:
-      allowed_vlans:
-        - vlan: 100
-        - vlan: 200
-        - vlan: 201
-        - vlan: 202
-        - vlan: 301
-        - vlan: 302
-        - vlan: 303
-        - vlan: 304
-        - vlan: 305
-        - vlan: 306
-        - vlan: 307
-        - vlan: 308
-        - vlan: 309
-        - vlan: 310
-  - name: PortChannel 11
-    trunk:
-      allowed_vlans:
-        - vlan: 100
-        - vlan: 200
-        - vlan: 201
-        - vlan: 202
-        - vlan: 301
-        - vlan: 302
-        - vlan: 303
-        - vlan: 304
-        - vlan: 305
-        - vlan: 306
-        - vlan: 307
-        - vlan: 308
-        - vlan: 309
-        - vlan: 310
-  - name: PortChannel 12
-    trunk:
-      allowed_vlans:
-        - vlan: 100
-        - vlan: 200
-        - vlan: 201
-        - vlan: 202
-        - vlan: 301
-        - vlan: 302
-        - vlan: 303
-        - vlan: 304
-        - vlan: 305
-        - vlan: 306
-        - vlan: 307
-        - vlan: 308
-        - vlan: 309
-        - vlan: 310
   - name: PortChannel100
     trunk:
       allowed_vlans:
@@ -183,10 +108,10 @@ sonic_l2_interfaces:
 sonic_l3_interfaces:
   - ipv6:
       enabled: true
-    name: Eth1/53
+    name: Eth1/6
   - ipv6:
       enabled: true
-    name: Eth1/54
+    name: Eth1/7
   - ipv4:
       addresses:
         - address: '{{ loopback0_ip }}'
@@ -198,23 +123,8 @@ sonic_l3_interfaces:
 sonic_lag_interfaces:
   - members:
       interfaces:
-        - member: Eth1/1
-    mode: lacp
-    name: PortChannel10
-  - members:
-      interfaces:
-        - member: Eth1/2
-    mode: lacp
-    name: PortChannel11
-  - members:
-      interfaces:
-        - member: Eth1/3
-    mode: lacp
-    name: PortChannel12
-  - members:
-      interfaces:
-        - member: Eth1/55
-        - member: Eth1/56
+        - member: Eth1/8
+        - member: Eth1/9
     name: PortChannel100
 sonic_system:
   anycast_address:
