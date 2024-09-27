@@ -81,13 +81,13 @@ loopback_inf3: Loopback3
 mgmt_gateway_ip: '{{ host_data[inventory_hostname].mgmt_gateway_ip }}'
 mgmt_ip: '{{ host_data[inventory_hostname].mgmt_ip }}'
 sonic_bgp_external_pg_entry:
-  - name: external
-    advertisement_interval: 0
+  - advertisement_interval: 0
     bfd:
       enabled: true
     capability:
       extended_nexthop: true
-      remote_as:
+    name: external
+    remote_as:
       peer_type: external
     timers:
       holdtime: 9
@@ -108,17 +108,17 @@ sonic_bgp_fabriclink_neighbors_aflist:
     afi: l2vpn
     safi: evpn
 sonic_bgp_spineleaf_peergroup:
-  - name: spine-leaf
-    advertisement_interval: 5
-    bfd:
-      enabled: true
-    capability:
-      extended_nexthop: true
-    remote_as:
-      peer_type: external
-    timers:
-      holdtime: 9
-      keepalive: 3
+  advertisement_interval: 5
+  bfd:
+    enabled: true
+  capability:
+    extended_nexthop: true
+  name: spine-leaf
+  remote_as:
+    peer_type: external
+  timers:
+    holdtime: 9
+    keepalive: 3
 vlan_info:
   61:
     neigh_suppress: true
