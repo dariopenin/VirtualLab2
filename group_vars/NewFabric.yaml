@@ -109,16 +109,17 @@ sonic_bgp_fabriclink_neighbors_aflist:
     safi: evpn
 sonic_bgp_spineleaf_peergroup:
   - advertisement_interval: 5
-  bfd:
-    enabled: true
-  capability:
-    extended_nexthop: true
-  name: spine-leaf
-  remote_as:
-    peer_type: external
-  timers:
-    holdtime: 9
-    keepalive: 3
+    bfd:
+      enabled: true
+    capability:
+      extended_nexthop: true
+    name: spine-leaf
+    remote_as:
+      peer_type: external
+    timers:
+      holdtime: 9
+      keepalive: 3
+
 vlan_info:
   61:
     neigh_suppress: true
