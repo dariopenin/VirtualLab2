@@ -166,9 +166,9 @@ sonic_bgp_af:
 sonic_bgp_neighbors:
   - bgp_as: '{{bgp_asn}}'
     neighbors:
-      - neighbor: Eth1/7
+      - neighbor: Eth1/54
         peer_group: spine-leaf
-      - neighbor: Eth1/6
+      - neighbor: Eth1/53
         peer_group: spine-leaf
     peer_group:
       - '{{sonic_bgp_spineleaf_peergroup}}'
@@ -189,9 +189,9 @@ sonic_bgp_neighbors_af:
   - bgp_as: '{{bgp_asn}}'
     neighbors:
       - address_family: '{{sonic_bgp_fabriclink_neighbors_aflist}}'
-        neighbor: Eth1/7
+        neighbor: Eth1/54
       - address_family: '{{sonic_bgp_fabriclink_neighbors_aflist}}'
-        neighbor: Eth1/6
+        neighbor: Eth1/53
   - bgp_as: '{{bgp_asn}}'
     neighbors:
       - address_family:
@@ -211,21 +211,24 @@ sonic_bgp_neighbors_af:
 sonic_config:
   lines: []
 sonic_interfaces:
-  - description: '"External"'
+  - description: '"Uplink"'
     enabled: true
-    name: Eth1/5
-  - description: '"Uplink to DC1-S1"'
+    name: Eth1/1
+  - description: '"Uplink"'
     enabled: true
-    name: Eth1/6
-  - description: '"Uplink to DC1-S2"'
+    name: Eth1/2
+  - description: '"Uplink to DC1-S2 Eth1/5"'
     enabled: true
-    name: Eth1/7
-  - description: '"MCLAG"'
+    name: Eth1/53
+  - description: '"Uplink to DC1-S1 Eth1/5"'
     enabled: true
-    name: Eth1/8
-  - description: '"MCLAG"'
+    name: Eth1/54
+  - description: '"MCLAG to DC1-R3L2 Eth1/55"'
     enabled: true
-    name: Eth1/9
+    name: Eth1/55
+  - description: '"MCLAG to DC1-R3L2 Eth1/56"'
+    enabled: true
+    name: Eth1/56
   - description: router-id
     name: '{{ loopback_inf0 }}'
   - description: vtep
@@ -233,10 +236,14 @@ sonic_interfaces:
   - description: Multisite
     name: '{{ loopback_inf3 }}'
 sonic_l2_interfaces:
-  - name: Eth1/5
+  - name: Eth1/1
     trunk:
       allowed_vlans:
-        - vlan: 3000
+        - vlan: 4000
+  - name: Eth1/2
+    trunk:
+      allowed_vlans:
+        - vlan: 4000
   - name: PortChannel100
     trunk:
       allowed_vlans:
@@ -259,10 +266,10 @@ sonic_l2_interfaces:
 sonic_l3_interfaces:
   - ipv6:
       enabled: true
-    name: Eth1/6
+    name: Eth1/53
   - ipv6:
       enabled: true
-    name: Eth1/7
+    name: Eth1/54
   - ipv4:
       addresses:
         - address: '{{ loopback0_ip }}'
@@ -278,12 +285,12 @@ sonic_l3_interfaces:
   - ipv4:
       addresses:
         - address: 192.168.10.1/30
-    name: Vlan3000
+    name: Vlan4000
 sonic_lag_interfaces:
   - members:
       interfaces:
-        - member: Eth1/8
-        - member: Eth1/9
+        - member: Eth1/55
+        - member: Eth1/56
     name: PortChannel100
 sonic_system:
   anycast_address:
@@ -292,7 +299,7 @@ sonic_system:
   hostname: DC1-R3L1
   interface_naming: standard
 sonic_vlans:
-  - vlan_id: 3000
+  - vlan_id: 4000
   - vlan_id: 100
   - vlan_id: 200
   - vlan_id: 201
@@ -322,7 +329,7 @@ sonic_vrf_interfaces:
         - name: Vlan303
         - name: Vlan304
         - name: Vlan305
-        - name: Vlan3000
+        - name: Vlan4000
     name: VrfTenant1
   - members:
       interfaces:
