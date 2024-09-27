@@ -16,12 +16,12 @@
         seconds: 30
       ignore_errors: yes
 
-    - name: Push Configurations For Custom CLIs. pre
-      vars:
-        ansible_connection: network_cli
-      sonic_config:
-        src: fdc_clis_pre.j2
-      register: result
+#    - name: Push Configurations For Custom CLIs. pre
+#      vars:
+#        ansible_connection: network_cli
+#      sonic_config:
+#        src: fdc_clis_pre.j2
+#      register: result
 
     - name: Configure System
       sonic_system:
