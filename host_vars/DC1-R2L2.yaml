@@ -130,7 +130,7 @@ sonic_system:
   anycast_address:
     ipv4: true
     mac_address: '{{ anycast_mac_address }}'
-  hostname: DC1-R1L1
+  hostname: DC1-R2L2
   interface_naming: standard
 sonic_vlans:
   - vlan_id: 100

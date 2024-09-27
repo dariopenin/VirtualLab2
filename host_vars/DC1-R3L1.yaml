@@ -236,7 +236,7 @@ sonic_l2_interfaces:
   - name: Eth1/5
     trunk:
       allowed_vlans:
-        - vlan: 4000
+        - vlan: 3000
   - name: PortChannel100
     trunk:
       allowed_vlans:
@@ -278,7 +278,7 @@ sonic_l3_interfaces:
   - ipv4:
       addresses:
         - address: 192.168.10.1/30
-    name: Vlan4000
+    name: Vlan3000
 sonic_lag_interfaces:
   - members:
       interfaces:
@@ -292,7 +292,7 @@ sonic_system:
   hostname: DC1-R3L1
   interface_naming: standard
 sonic_vlans:
-  - vlan_id: 4000
+  - vlan_id: 3000
   - vlan_id: 100
   - vlan_id: 200
   - vlan_id: 201
@@ -322,7 +322,7 @@ sonic_vrf_interfaces:
         - name: Vlan303
         - name: Vlan304
         - name: Vlan305
-        - name: Vlan4000
+        - name: Vlan3000
     name: VrfTenant1
   - members:
       interfaces:
