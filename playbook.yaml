@@ -13,7 +13,7 @@
           - ip vrf mgmt
       register: result
     - pause:
-        seconds: 30
+        seconds: 5
       ignore_errors: yes
 
     - name: Configure System
@@ -21,14 +21,14 @@
         config: '{{sonic_system}}'
       when: sonic_system is defined and sonic_system
     - pause:
-        seconds: 30
+        seconds: 5
 
     - name: Configure Port Breakouts
       sonic_port_breakout:
         config: '{{sonic_port_breakout}}'
       when: sonic_port_breakout is defined and sonic_port_breakout
     - pause:
-        seconds: 30
+        seconds: 5
     
     - name: Create Vlans
       sonic_vlans:
